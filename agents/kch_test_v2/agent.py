@@ -14,9 +14,27 @@
 
 from veadk import Agent
 
+# 版本标记：每次更新代码时改这里，deploy 后调用 version_probe 即可确认线上是否为最新版本。
+VERSION_MARKER = "v1"
+
+
+def version_probe() -> dict[str, str]:
+    """返回当前线上部署的版本标记，用于确认线上版本是否已随代码更新。
+
+    当用户询问“版本”“更新了吗”“version”等问题时调用本工具，
+    并把返回的 version 原样告知用户。
+
+    Returns:
+        一个包含版本标记的字典。
+    """
+    return {"version": VERSION_MARKER}
+
+
 INSTRUCTION_AGENT = """你是一个专业、可靠的智能助手。
 
 你的目标是准确理解用户的需求，并给出条理清晰、简洁有用的回答。
+
+当用户询问版本或是否已更新时，调用 version_probe 工具并如实返回版本标记。
 
 约束：
 - 信息不足时主动提问澄清，不要臆造事实。
@@ -28,6 +46,7 @@ agent = Agent(
     description="一个基于 VeADK 构建的智能助手，理解用户意图并调用合适的工具完成任务。",
     instruction=INSTRUCTION_AGENT,
     model_name="doubao-seed-2-1-pro-260628",
+    tools=[version_probe],
 )
 
 AGENT_DISPLAY_NAMES = {'kch_test_v2': 'kch_test_v2'}
