@@ -10,7 +10,7 @@ permissions:
   contents: read
 
 concurrency:
-  group: "agentkit-runtime-r-yesqshm48wj4bp9grpvs"
+  group: "agentkit-runtime-r-yesr86n20wnc39sewnrz"
   cancel-in-progress: true
 
 jobs:
@@ -22,11 +22,11 @@ jobs:
         working-directory: "."
     env:
       AGENTKIT_CLOUD_PROVIDER: volcengine
-      VOLC_ACCESSKEY: ${{ secrets.VOLCENGINE_ACCESS_KEY }}
-      VOLC_SECRETKEY: ${{ secrets.VOLCENGINE_SECRET_KEY }}
-      VOLC_SESSIONTOKEN: ${{ secrets.VOLCENGINE_SESSION_TOKEN }}
-      AGENTKIT_RUNTIME_NAME: "kch_test_v2-gdz6ikxd"
-      AGENTKIT_RUNTIME_ID: "r-yesqshm48wj4bp9grpvs"
+      VOLCENGINE_ACCESS_KEY: ${{ secrets.VOLCENGINE_ACCESS_KEY }}
+      VOLCENGINE_SECRET_KEY: ${{ secrets.VOLCENGINE_SECRET_KEY }}
+      VOLCENGINE_SESSION_TOKEN: ${{ secrets.VOLCENGINE_SESSION_TOKEN }}
+      AGENTKIT_RUNTIME_NAME: "kch_cicd_test-umnianop"
+      AGENTKIT_RUNTIME_ID: "r-yesr86n20wnc39sewnrz"
       AGENTKIT_REGION: "cn-beijing"
     steps:
       - uses: actions/checkout@v4
@@ -52,9 +52,9 @@ jobs:
           from agentkit.toolkit.models import PreflightMode
 
           runtime_client = AgentkitRuntimeClient(
-              access_key=os.environ["VOLC_ACCESSKEY"],
-              secret_key=os.environ["VOLC_SECRETKEY"],
-              session_token=os.environ.get("VOLC_SESSIONTOKEN", ""),
+              access_key=os.environ["VOLCENGINE_ACCESS_KEY"],
+              secret_key=os.environ["VOLCENGINE_SECRET_KEY"],
+              session_token=os.environ.get("VOLCENGINE_SESSION_TOKEN", ""),
               region=os.environ["AGENTKIT_REGION"],
           )
           runtime = runtime_client.get_runtime(
